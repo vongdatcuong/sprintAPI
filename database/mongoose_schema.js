@@ -73,6 +73,13 @@ columnSchema.virtual("cards", {
     justOne: false
 });
 
+columnSchema.virtual("cardNumber", {
+    ref: "Card",
+    localField: "columnID",
+    foreignField: "columnID",
+    count: true
+});
+
 columnSchema.virtual("columnType", {
     ref: "ColumnType",
     localField: "columnTypeID",
@@ -85,7 +92,7 @@ mongoose.model("Column", columnSchema);
 
 // Card
 const cardSchema = new mongoose.Schema({
-    columnrID: { type: SchemaTypes.Long, min: 0, default: 0 },
+    columnID: { type: SchemaTypes.Long, min: 0, default: 0 },
     userID: { type: SchemaTypes.Long, min: 0, default: 0 },
     content: String,
     createdDate: Date,
@@ -98,7 +105,7 @@ cardSchema.virtual("column", {
     foreignField: "columnID"
 });
 
-boardSchema.virtual("createdBy", {
+cardSchema.virtual("createdBy", {
     ref: "User",
     localField: "userID",
     foreignField: "userID"
