@@ -12,6 +12,7 @@ require('./database/db');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var boardRouter = require('./components/board');
+var userRouter = require('./components/user');
 
 var app = express();
 
@@ -29,10 +30,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+//app.use('/users', usersRouter);
 app.use('/boards', boardRouter);
-
-// catch 404 and forward to error handler
+app.use('/users', userRouter);
 app.use(function(req, res, next) {
   next(createError(404));
 });
