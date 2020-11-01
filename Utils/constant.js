@@ -7,6 +7,7 @@ const usernameExisted = "Username has already existed";
 const signUpSuccess = "Register successfully !!!";
 const signUpFail = "Register fail !!!";
 const createBoardFail = "Create Board fail !!!";
+const deleteBoardFail = "Delete Board fail !!!";
 
 module.exports = {
     defaultColNum,
@@ -16,5 +17,6 @@ module.exports = {
     usernameExisted,
     signUpSuccess,
     signUpFail,
-    createBoardFail
+    createBoardFail,
+    deleteBoardFail
 }

@@ -10,6 +10,9 @@ router.get('/', passport.authenticate('jwt', { session: false }), BoardControlle
 router.get('/myBoard', passport.authenticate('jwt', { session: false }), BoardController.myBoard);
 
 /* POST Add new board */
-router.post('/addBoard', passport.authenticate('jwt', { session: false }), BoardController.addBoard);
+router.post('/add', passport.authenticate('jwt', { session: false }), BoardController.addBoard);
+
+/* POST Delete board */
+router.post('/delete', passport.authenticate('jwt', { session: false }), BoardController.deleteBoard);
 
 module.exports = router;

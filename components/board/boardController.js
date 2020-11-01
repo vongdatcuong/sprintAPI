@@ -70,8 +70,38 @@ const addBoard = async (req, res, next) => {
     }
 };
 
+/* POST Delete Board. */
+const deleteBoard = async (req, res, next) => {
+    try {
+        if (!req.body.userID || !req.body.boardID) {
+            res.json({
+                isSuccess: false,
+                message: constant.deleteBoardFail
+            })
+        } else {
+            const deletedBoard = await Board.deleteBoard(parseInt(req.body.boardID), parseInt(req.body.userID));
+            if (deletedBoard){
+                res.json({
+                   isSuccess: true
+                })
+            } else {
+                res.json({
+                    isSuccess: false,
+                    message: constant.deleteBoardFail
+                })
+            }
+        }
+    } catch (error) {
+        res.json({
+            isSuccess: false,
+            message: constant.deleteBoardFail
+        })
+    }
+};
+
 module.exports = {
     boards,
     myBoard,
-    addBoard
+    addBoard,
+    deleteBoard
 };

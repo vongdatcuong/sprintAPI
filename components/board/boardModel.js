@@ -30,4 +30,9 @@ module.exports = {
             console.log('error at add new board' + err);
         }
     },
+    deleteBoard(boardID, userID){
+        return Board.findOneAndUpdate({ boardID: boardID, userID: userID }, {
+            isActive: false
+        }).exec();
+    }
 };
