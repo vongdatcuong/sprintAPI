@@ -16,6 +16,7 @@ const logIn = async (req, res, next) => {
                     res.json({
                         isSuccess: true,
                         user: {
+                            userID: user.userID,
                             username: user.username,
                             name: user.name,
                             email: user.email,

@@ -2,10 +2,11 @@ const defaultColNum = 3;
 const SALT_ROUNDS = 7;
 
 // Messages
-const logInInvalid = "Username hoặc Password không hợp lệ !!!";
-const usernameExisted = "Username đã tồn tại";
-const signUpSuccess = "Đăng ký thành công !!!";
-const signUpFail = "Đăng ký thất bại !!!";
+const logInInvalid = "Username or Password invalid!!!";
+const usernameExisted = "Username has already existed";
+const signUpSuccess = "Register successfully !!!";
+const signUpFail = "Register fail !!!";
+const createBoardFail = "Create Board fail !!!";
 
 module.exports = {
     defaultColNum,
@@ -14,5 +15,6 @@ module.exports = {
     logInInvalid,
     usernameExisted,
     signUpSuccess,
-    signUpFail
+    signUpFail,
+    createBoardFail
 }
