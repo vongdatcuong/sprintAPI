@@ -35,17 +35,56 @@ const logIn = async (req, res, next) => {
         } else {
             res.json({
                 isSuccess: false,
-                message: constant.logInValid
+                message: constant.logInInvalid
             })
         }
     } else {
         res.json({
             isSuccess: false,
-            message: constant.logInValid
+            message: constant.logInInvalid
         });
     }
 };
 
+/* POST Sign up */
+const signUp = async(req, res, next) => {
+    try {
+        let username = await User.getUserByUsername(req.body.username);
+        if (username) {
+            res.json({
+                isSuccess: false,
+                message: constant.usernameExisted
+            })
+        } else {
+            const result = await User.addUser({
+                username: req.body.username.trim(),
+                password: req.body.password.trim(),
+                email: req.body.email.trim(),
+                name: req.body.name.trim(),
+            });
+
+            if (result){
+                res.json({
+                    isSuccess: true,
+                    message: constant.signUpSuccess,
+                    user: result
+                })
+            } else {
+                res.json({
+                    isSuccess: false,
+                    message: constant.signUpFail
+                })
+            }
+        }
+    } catch (error) {
+        res.json({
+            isSuccess: false,
+            message: constant.signUpFail
+        })
+    }
+};
+
 module.exports = {
-    logIn
+    logIn,
+    signUp
 };
