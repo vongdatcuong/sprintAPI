@@ -8,6 +8,8 @@ const signUpSuccess = "Register successfully !!!";
 const signUpFail = "Register fail !!!";
 const createBoardFail = "Create Board fail !!!";
 const deleteBoardFail = "Delete Board fail !!!";
+const updateProfileSuccess = "Update Profile success !!!";
+const updateProfileFail = "Update Profile fail !!!";
 
 module.exports = {
     defaultColNum,
@@ -18,5 +20,7 @@ module.exports = {
     signUpSuccess,
     signUpFail,
     createBoardFail,
-    deleteBoardFail
+    deleteBoardFail,
+    updateProfileSuccess,
+    updateProfileFail
 }

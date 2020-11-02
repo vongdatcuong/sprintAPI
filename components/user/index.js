@@ -3,10 +3,13 @@ var router = express.Router();
 const UserController = require('./userController');
 const passport = require('./passport.js');
 
-/* Log In. */
+/* POST Log In. */
 router.post('/logIn', UserController.logIn);
 
-/* Sign Up. */
+/* POST Sign Up. */
 router.post('/signUp', UserController.signUp);
+
+/* POST Update profile. */
+router.post('/updateProfile', UserController.updateProfile);
 
 module.exports = router;

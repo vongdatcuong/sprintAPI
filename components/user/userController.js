@@ -85,7 +85,42 @@ const signUp = async(req, res, next) => {
     }
 };
 
+/* POST Update profile */
+const updateProfile = async(req, res, next) => {
+    try {
+        if (!req.body.userID) {
+            res.json({
+                isSuccess: false,
+                message: constant.updateProfileFail
+            })
+        } else {
+            const updatedUser = await User.updateUser(req.body.userID, {
+                name: req.body.name.trim(),
+                email: req.body.email.trim(),
+                gender: req.body.gender.trim(),
+            });
+            if (updatedUser){
+                res.json({
+                   isSuccess: true,
+                   message: constant.updateProfileSuccess
+                })
+            } else {
+                res.json({
+                    isSuccess: false,
+                    message: constant.updateProfileFail
+                })
+            }
+        }
+    } catch (error) {
+        res.json({
+            isSuccess: false,
+            message: constant.updateProfileFail
+        })
+    }
+};
+
 module.exports = {
     logIn,
-    signUp
+    signUp,
+    updateProfile
 };

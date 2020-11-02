@@ -31,4 +31,12 @@ module.exports = {
             })
         })
     },
+    updateUser(userID, info){
+        info = info || {};
+        return User.findOneAndUpdate({userID: userID }, {
+            name: info.name || "",
+            email: info.email || "",
+            gender: info.gender || ""
+        }).exec();
+    }
 };
