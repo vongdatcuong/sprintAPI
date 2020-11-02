@@ -15,6 +15,9 @@ router.get('/board', passport.authenticate('jwt', { session: false }), BoardCont
 /* POST Add new board */
 router.post('/add', passport.authenticate('jwt', { session: false }), BoardController.addBoard);
 
+/* POST Change board name */
+router.post('/updateName', passport.authenticate('jwt', { session: false }), BoardController.updateName);
+
 /* POST Delete board */
 router.post('/delete', passport.authenticate('jwt', { session: false }), BoardController.deleteBoard);
 

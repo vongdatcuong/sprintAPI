@@ -13,7 +13,7 @@ module.exports = {
             })
             .exec();
     },
-    getBoard(userID, boardID, option){
+    getBoard(option){
         option = option || {};
         option.isActive = option.isActive || true;
         return Board.findOne(option)
@@ -39,6 +39,9 @@ module.exports = {
         } catch (err) {
             console.log('error at add new board' + err);
         }
+    },
+    updateBoard(boardID, userID, newInfo){
+        return Board.findOneAndUpdate({ boardID: boardID, userID: userID }, newInfo).exec();
     },
     deleteBoard(boardID, userID){
         return Board.findOneAndUpdate({ boardID: boardID, userID: userID }, {

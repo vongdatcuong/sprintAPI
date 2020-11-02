@@ -1,4 +1,5 @@
 const Board = require('./boardModel');
+const Column = require('../column/columnModel');
 const constant = require('../../Utils/constant.js');
 
 /* GET all Boards. */
@@ -45,32 +46,39 @@ const board = async (req, res, next) => {
         })
     } else {
         const board = await Board.getBoard({userID: parseInt(req.user.userID), boardID: parseInt(req.query.boardID)});
-        const returnBoard = {
-            boardID: board.boardID,
-            name: board.name,
-            createdDate: board.createdDate,
-            numOfCol: board.numOfCol,
-        };
-         returnBoard.columns = board.columns.map((col, index) => {
-            const newCol = {
-                columnID: col.columnID,
-                columnName: col.columnType.name,
-                numOfCard: col.numOfCard,
-                createdDate: col.createdDate
-            }
-            newCol.cards = col.cards.map((card, index) => {
-                return {
-                    cardID: card.cardID,
-                    content: card.content,
-                    createdDate: card.createdDate,
+        if (board){
+            const returnBoard = {
+                boardID: board.boardID,
+                name: board.name,
+                createdDate: board.createdDate,
+                numOfCol: board.numOfCol,
+            };
+             returnBoard.columns = board.columns.map((col, index) => {
+                const newCol = {
+                    columnID: col.columnID,
+                    columnName: col.columnType.name,
+                    numOfCard: col.numOfCard,
+                    createdDate: col.createdDate
                 }
+                newCol.cards = col.cards.map((card, index) => {
+                    return {
+                        cardID: card.cardID,
+                        content: card.content,
+                        createdDate: card.createdDate,
+                    }
+                })
+                return newCol;
             })
-            return newCol;
-        })
-        res.json({
-            isSuccess: true,
-            board: returnBoard
-        });
+            res.json({
+                isSuccess: true,
+                board: returnBoard
+            });
+        } else {
+            res.json({
+                isSuccess: false
+            })
+        }
+        
     }
 };
 
@@ -88,16 +96,24 @@ const addBoard = async (req, res, next) => {
             });
 
             if (newBoard){
-                res.json({
-                   isSuccess: true,
-                   board: {
-                        boardID: newBoard.boardID,
-                        name: newBoard.name,
-                        createdDate: new Date(newBoard.createdDate),
-                        numOfCol: newBoard.numOfCol,
-                        numOfCard: 0
-                    }
-                })
+                try {
+                    await Column.createDefaultColumns(newBoard.boardID);
+                    res.json({
+                        isSuccess: true,
+                        board: {
+                             boardID: newBoard.boardID,
+                             name: newBoard.name,
+                             createdDate: new Date(newBoard.createdDate),
+                             numOfCol: newBoard.numOfCol,
+                             numOfCard: 0
+                         }
+                     })
+                } catch {
+                    res.json({
+                        isSuccess: false,
+                        message: constant.createBoardFail
+                    })
+                }
             } else {
                 res.json({
                     isSuccess: false,
@@ -112,6 +128,38 @@ const addBoard = async (req, res, next) => {
         })
     }
 };
+
+/* POST Change Board name. */
+const updateName = async (req, res, next) => {
+    try {
+        if (!req.user.userID || !req.body.boardID || !req.body.name) {
+            res.json({
+                isSuccess: false,
+                message: constant.updateBoardNameFail
+            })
+        } else {
+            const updatedBoard = await Board.updateBoard(parseInt(req.body.boardID), parseInt(req.user.userID), {
+                name: req.body.name.trim()
+            });
+            if (updatedBoard){
+                res.json({
+                   isSuccess: true,
+                   message: constant.updateBoardNameSuccess
+                })
+            } else {
+                res.json({
+                    isSuccess: false,
+                    message: constant.updateBoardNameFail
+                })
+            }
+        }
+    } catch (error) {
+        res.json({
+            isSuccess: false,
+            message: constant.updateBoardNameFail
+        })
+    }
+}
 
 /* POST Delete Board. */
 const deleteBoard = async (req, res, next) => {
@@ -147,5 +195,6 @@ module.exports = {
     myBoard,
     board,
     addBoard,
+    updateName,
     deleteBoard
 };
