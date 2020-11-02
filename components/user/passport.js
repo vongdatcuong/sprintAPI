@@ -6,8 +6,9 @@ ExtractJwt = require('passport-jwt').ExtractJwt;
 const opts = {}
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = process.env.JWT_SECRET_KEY;
+opts.passReqToCallback= true;
 
-passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
+passport.use(new JwtStrategy(opts, function(req, jwt_payload, done) {
     User.findOne({userID: jwt_payload.userID}, function(err, user) {
         if (err) {
             return done(err, false);

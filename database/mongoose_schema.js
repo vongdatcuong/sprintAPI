@@ -83,7 +83,8 @@ columnSchema.virtual("cardNumber", {
 columnSchema.virtual("columnType", {
     ref: "ColumnType",
     localField: "columnTypeID",
-    foreignField: "columnTypeID"
+    foreignField: "columnTypeID",
+    justOne: true
 });
 
 columnSchema.index({ coords: "2dsphere" });

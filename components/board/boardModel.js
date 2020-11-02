@@ -13,6 +13,16 @@ module.exports = {
             })
             .exec();
     },
+    getBoard(userID, boardID, option){
+        option = option || {};
+        option.isActive = option.isActive || true;
+        return Board.findOne(option)
+            .populate({
+                path: 'columns',
+                populate: [{ path: 'cards', match: {isActive: true} }, { path: 'columnType' }]
+            })
+            .exec();
+    },
     addBoard(userID, info){
         info = info || {};
         info.name = info.name || "";

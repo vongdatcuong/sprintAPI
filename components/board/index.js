@@ -9,6 +9,9 @@ router.get('/', passport.authenticate('jwt', { session: false }), BoardControlle
 /* GET Boards of User. */
 router.get('/myBoard', passport.authenticate('jwt', { session: false }), BoardController.myBoard);
 
+/* GET Detail Boards of User. */
+router.get('/board', passport.authenticate('jwt', { session: false }), BoardController.board);
+
 /* POST Add new board */
 router.post('/add', passport.authenticate('jwt', { session: false }), BoardController.addBoard);
 

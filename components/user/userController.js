@@ -87,14 +87,14 @@ const signUp = async(req, res, next) => {
 
 /* POST Update profile */
 const updateProfile = async(req, res, next) => {
-    try {
-        if (!req.body.userID) {
+    try { 
+        if (!req.user.userID) {
             res.json({
                 isSuccess: false,
                 message: constant.updateProfileFail
             })
         } else {
-            const updatedUser = await User.updateUser(req.body.userID, {
+            const updatedUser = await User.updateUser(req.user.userID, {
                 name: req.body.name.trim(),
                 email: req.body.email.trim(),
                 gender: req.body.gender.trim(),

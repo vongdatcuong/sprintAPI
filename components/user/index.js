@@ -10,6 +10,6 @@ router.post('/logIn', UserController.logIn);
 router.post('/signUp', UserController.signUp);
 
 /* POST Update profile. */
-router.post('/updateProfile', UserController.updateProfile);
+router.post('/updateProfile', passport.authenticate('jwt', { session: false }), UserController.updateProfile);
 
 module.exports = router;
