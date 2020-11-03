@@ -14,6 +14,7 @@ const updateBoardNameSuccess = "Update Board name success !!!";
 const updateBoardNameFail = "Update Board name fail !!!";
 const deleteCardFail = "Delete Card fail !!!";
 const addCardFail = "Delete Card fail !!!";
+const updateCardFail = "Update Card fail !!!";
 
 module.exports = {
     defaultColNum,
@@ -30,5 +31,6 @@ module.exports = {
     updateBoardNameSuccess,
     updateBoardNameFail,
     deleteCardFail,
-    addCardFail
+    addCardFail,
+    updateCardFail
 }

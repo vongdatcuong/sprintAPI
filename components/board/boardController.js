@@ -141,7 +141,7 @@ const updateName = async (req, res, next) => {
                 message: constant.updateBoardNameFail
             })
         } else {
-            const updatedBoard = await Board.updateBoard(parseInt(req.body.boardID), parseInt(userIDStr), {
+            const updatedBoard = await Board.updateBoard(parseInt(req.body.boardID), {
                 name: req.body.name.trim()
             });
             if (updatedBoard){

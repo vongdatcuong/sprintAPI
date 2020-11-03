@@ -100,7 +100,40 @@ const addCard = async (req, res, next) => {
     }
 };
 
+/* POST Update Card. */
+const updateCard = async (req, res, next) => {
+    const userIDStr = req.body.userID || req.user.userID;
+    try {
+        if (!userIDStr || !req.body.cardID || !req.body.content) {
+            res.json({
+                isSuccess: false,
+                message: constant.updateCardFail
+            })
+        } else {
+            const updatedCard = await Card.updateCard(parseInt(req.body.cardID), {
+                content: req.body.content.trim()
+            });
+            if (updatedCard){
+                res.json({
+                   isSuccess: true
+                })
+            } else {
+                res.json({
+                    isSuccess: false,
+                    message: constant.updateCardFail
+                })
+            }
+        }
+    } catch (error) {
+        res.json({
+            isSuccess: false,
+            message: constant.updateCardFail
+        })
+    }
+}
+
 module.exports = {
     deleteCard,
-    addCard
+    addCard,
+    updateCard
 };

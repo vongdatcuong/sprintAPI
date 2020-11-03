@@ -24,4 +24,7 @@ module.exports = {
             console.log('error at add new card' + err);
         }
     },
+    updateCard(cardID, newInfo){
+        return Card.findOneAndUpdate({ cardID: cardID}, newInfo).exec();
+    },
 };

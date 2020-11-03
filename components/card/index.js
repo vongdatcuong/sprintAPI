@@ -10,4 +10,7 @@ router.post('/delete', passport.authenticate('jwt', { session: false }), CardCon
 /* POST Add card */
 router.post('/add', passport.authenticate('jwt', { session: false }), CardController.addCard);
 
+/* POST Update card */
+router.post('/update', passport.authenticate('jwt', { session: false }), CardController.updateCard);
+
 module.exports = router;
