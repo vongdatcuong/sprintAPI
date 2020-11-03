@@ -40,12 +40,13 @@ const myBoard = async (req, res, next) => {
 
 /* GET Detail Boards of User. */
 const board = async (req, res, next) => {
-    if (!req.user || !req.query.boardID){
+    const userIDStr = req.query.userID || req.user.userID;
+    if (!userIDStr || !req.query.boardID){
         res.json({
             isSuccess: false
         })
     } else {
-        const board = await Board.getBoard({userID: parseInt(req.user.userID), boardID: parseInt(req.query.boardID)});
+        const board = await Board.getBoard({userID: parseInt(userIDStr), boardID: parseInt(req.query.boardID)});
         if (board){
             const returnBoard = {
                 boardID: board.boardID,
@@ -132,14 +133,15 @@ const addBoard = async (req, res, next) => {
 
 /* POST Change Board name. */
 const updateName = async (req, res, next) => {
+    const userIDStr = req.body.userID || req.user.userID;
     try {
-        if (!req.user.userID || !req.body.boardID || !req.body.name) {
+        if (!userIDStr || !req.body.boardID || !req.body.name) {
             res.json({
                 isSuccess: false,
                 message: constant.updateBoardNameFail
             })
         } else {
-            const updatedBoard = await Board.updateBoard(parseInt(req.body.boardID), parseInt(req.user.userID), {
+            const updatedBoard = await Board.updateBoard(parseInt(req.body.boardID), parseInt(userIDStr), {
                 name: req.body.name.trim()
             });
             if (updatedBoard){

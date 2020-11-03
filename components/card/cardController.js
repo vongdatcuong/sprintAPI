@@ -43,6 +43,64 @@ const deleteCard = async (req, res, next) => {
     }
 };
 
+/* POST Add New Board. */
+const addCard = async (req, res, next) => {
+    try {
+        const userIDStr = req.body.userID || req.user.userID;
+        if (!userIDStr || !req.body.columnID) {
+            res.json({
+                isSuccess: false,
+                message: constant.addCardFail
+            })
+        } else {
+            const columnID = parseInt(req.body.columnID);
+            const newCard = await Card.addCard(parseInt(userIDStr), columnID, {
+                content: req.body.content.trim(),
+            });
+
+            if (newCard){
+                try {
+                    const updatedCol = await Column.updateColumn(columnID, {
+                        $inc: {numOfCard: 1}
+                    })
+                    if (updatedCol){
+                        res.json({
+                            isSuccess: true,
+                            card: {
+                                cardID: newCard.cardID,
+                                columnID: columnID,
+                                content: newCard.content,
+                                createdDate: newCard.createdDate,
+                             }
+                        })
+                    } else{
+                        res.json({
+                            isSuccess: false,
+                            message: constant.addCardFail
+                        })
+                    }
+                } catch (error){
+                    res.json({
+                        isSuccess: false,
+                        message: constant.addCardFail
+                    })
+                }
+            } else {
+                res.json({
+                    isSuccess: false,
+                    message: constant.addCardFail
+                })
+            }
+        }
+    } catch (error) {
+        res.json({
+            isSuccess: false,
+            message: constant.addCardFail
+        })
+    }
+};
+
 module.exports = {
-    deleteCard
+    deleteCard,
+    addCard
 };

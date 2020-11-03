@@ -14,7 +14,10 @@ module.exports = {
         }
         promise.populate({
                 path: 'columns',
-                populate:' cardNumber'
+                populate: {
+                    path: 'cardNumber',
+                    match: {isActive: true}
+                }
             })
         return promise.exec();
     },
