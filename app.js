@@ -13,6 +13,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var boardRouter = require('./components/board');
 var userRouter = require('./components/user');
+var cardRouter = require('./components/card');
 
 var app = express();
 
@@ -33,6 +34,7 @@ app.use('/', indexRouter);
 //app.use('/users', usersRouter);
 app.use('/boards', boardRouter);
 app.use('/user', userRouter);
+app.use('/cards', cardRouter);
 app.use(function(req, res, next) {
   next(createError(404));
 });

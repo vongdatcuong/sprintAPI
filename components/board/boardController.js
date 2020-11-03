@@ -24,7 +24,7 @@ const myBoard = async (req, res, next) => {
             isSuccess: false
         })
     } else {
-        let boards = await Board.getAllBoards({userID: parseInt(req.user.userID)});
+        let boards = await Board.getAllBoards({userID: parseInt(req.user.userID)}, {sort: {createdDate: 1}});
         const result = boards.map((board, index) => {
             return {
                 boardID: board.boardID,
@@ -63,6 +63,7 @@ const board = async (req, res, next) => {
                 newCol.cards = col.cards.map((card, index) => {
                     return {
                         cardID: card.cardID,
+                        columnID: col.columnID,
                         content: card.content,
                         createdDate: card.createdDate,
                     }

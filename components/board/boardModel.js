@@ -3,23 +3,29 @@ const constant = require('../../Utils/constant');
 const Board = mongoose.model('Board');
 
 module.exports = {
-    getAllBoards(option){
+    getAllBoards(query, option){
+        query = query || {};
+        query.isActive = query.isActive || true;
+
         option = option || {};
-        option.isActive = option.isActive || true;
-        return Board.find(option)
-            .populate({
+        const promise = Board.find(query)
+        if (option.sort){
+            promise.sort(option.sort)
+        }
+        promise.populate({
                 path: 'columns',
                 populate:' cardNumber'
             })
-            .exec();
+        return promise.exec();
     },
-    getBoard(option){
+    getBoard(query, option){
+        query = query || {};
+        query.isActive = query.isActive || true;
         option = option || {};
-        option.isActive = option.isActive || true;
-        return Board.findOne(option)
+        return Board.findOne(query)
             .populate({
                 path: 'columns',
-                populate: [{ path: 'cards', match: {isActive: true} }, { path: 'columnType' }]
+                populate: [{ path: 'cards', match: {isActive: true}, options: {sort: {createdDate: 1} }}, { path: 'columnType' }]
             })
             .exec();
     },

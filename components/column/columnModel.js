@@ -15,5 +15,9 @@ module.exports = {
             }).save())
         }
         return Promise.all(promises);
+    },
+    updateColumn(columnID, info){
+        info = info || {};
+        return Column.findOneAndUpdate({columnID: columnID }, info).exec();
     }
 };
