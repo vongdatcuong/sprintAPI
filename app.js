@@ -3,11 +3,14 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const passport = require("passport");
 var cors = require('cors');
 
 // Database connection
 require('dotenv').config();
 require('./database/db');
+
+var app = express();
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -15,7 +18,7 @@ var boardRouter = require('./components/board');
 var userRouter = require('./components/user');
 var cardRouter = require('./components/card');
 
-var app = express();
+
 
 // CORS
 app.use(cors());

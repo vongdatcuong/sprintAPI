@@ -1,6 +1,10 @@
 const defaultColNum = 3;
 const SALT_ROUNDS = 7;
 
+const clientDomain = 'http://localhost:3000';
+const redirectGooglePath = '/redirectGoogle';
+const tokenCheckIn = '&token=';
+
 // Messages
 const logInInvalid = "Username or Password invalid!!!";
 const usernameExisted = "Username has already existed";
@@ -19,6 +23,9 @@ const updateCardFail = "Update Card fail !!!";
 module.exports = {
     defaultColNum,
     SALT_ROUNDS,
+    clientDomain,
+    redirectGooglePath,
+    tokenCheckIn,
     // Messages
     logInInvalid,
     usernameExisted,

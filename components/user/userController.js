@@ -119,8 +119,49 @@ const updateProfile = async(req, res, next) => {
     }
 };
 
+/* GET Log in With Google */
+const redirectGoogleID = (req, res, next) => {
+    res.redirect(constant.clientDomain + constant.redirectGooglePath + "/" + req.user.googleID);
+}
+
+const logInWithGoogle = async(req, res, next) => {
+    if (req.body.googleID) {
+        const user = await User.getUser({
+            googleID: req.body.googleID
+        });
+        if (user){
+            var payload = { userID: user.userID };
+            var token = jwt.sign(payload, process.env.JWT_SECRET_KEY);
+            res.json({
+                isSuccess: true,
+                user: {
+                    userID: user.userID,
+                    username: user.username,
+                    name: user.name,
+                    email: user.email,
+                    gender: user.gender,
+                    createdDate: user.createdDate,
+                    token: token
+                }
+            })
+        } else {
+            res.json({
+                isSuccess: false,
+                message: constant.logInInvalid
+            })
+        }
+    } else {
+        res.json({
+            isSuccess: false,
+            message: constant.logInInvalid
+        })
+    }
+};
+
 module.exports = {
     logIn,
     signUp,
-    updateProfile
+    updateProfile,
+    redirectGoogleID,
+    logInWithGoogle
 };

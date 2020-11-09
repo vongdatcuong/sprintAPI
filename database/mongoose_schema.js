@@ -11,6 +11,8 @@ const userSchema = new mongoose.Schema({
     email: String,
     gender: String,
     createdDate: Date,
+    googleID: String,
+    facebookID: String,
 }, { collection: "Users" }, { toJSON: { virtuals: true }, toObject: { virtuals: true } });
 
 userSchema.virtual("boards", {

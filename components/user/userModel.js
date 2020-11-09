@@ -7,6 +7,9 @@ module.exports = {
     getUserByUsername(username){
         return User.findOne({username: username}).exec();
     },
+    getUser(query){
+        return User.findOne(query).exec();
+    },
     addUser(info) {
         return new Promise((resolve, reject) => {
             bcrypt.hash(info.password, constant.SALT_ROUNDS, (err, hash) => {
@@ -30,6 +33,19 @@ module.exports = {
                 }
             })
         })
+    },
+    addGoogleUser(info) {
+        const newUser = new User({
+            email: info.email,
+            name: info.name,
+            createdDate: new Date(),
+            googleID: info.googleID,
+        });
+        try {
+            return newUser.save();
+        } catch (err) {
+            console.log('error at signUp' + err);
+        }
     },
     updateUser(userID, info){
         info = info || {};
