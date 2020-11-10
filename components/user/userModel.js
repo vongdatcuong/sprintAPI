@@ -47,6 +47,19 @@ module.exports = {
             console.log('error at signUp' + err);
         }
     },
+    addFacebookUser(info) {
+        const newUser = new User({
+            email: info.email,
+            name: info.name,
+            createdDate: new Date(),
+            facebookID: info.facebookID,
+        });
+        try {
+            return newUser.save();
+        } catch (err) {
+            console.log('error at signUp' + err);
+        }
+    },
     updateUser(userID, info){
         info = info || {};
         return User.findOneAndUpdate({userID: userID }, {

@@ -121,7 +121,7 @@ const updateProfile = async(req, res, next) => {
 
 /* GET Log in With Google */
 const redirectGoogleID = (req, res, next) => {
-    res.redirect(constant.clientDomain + constant.redirectGooglePath + "/" + req.user.googleID);
+    res.redirect(constant.clientDomain + constant.redirectPath + "/google/" + req.user.googleID);
 }
 
 const logInWithGoogle = async(req, res, next) => {
@@ -158,10 +158,51 @@ const logInWithGoogle = async(req, res, next) => {
     }
 };
 
+/* GET Log in With Google */
+const redirectFacebookID = (req, res, next) => {
+    res.redirect(constant.clientDomain + constant.redirectPath + "/facebook/" + req.user.facebookID);
+}
+
+const logInWithFacebook = async(req, res, next) => {
+    if (req.body.facebookID) {
+        const user = await User.getUser({
+            facebookID: req.body.facebookID
+        });
+        if (user){
+            var payload = { userID: user.userID };
+            var token = jwt.sign(payload, process.env.JWT_SECRET_KEY);
+            res.json({
+                isSuccess: true,
+                user: {
+                    userID: user.userID,
+                    username: user.username,
+                    name: user.name,
+                    email: user.email,
+                    gender: user.gender,
+                    createdDate: user.createdDate,
+                    token: token
+                }
+            })
+        } else {
+            res.json({
+                isSuccess: false,
+                message: constant.logInInvalid
+            })
+        }
+    } else {
+        res.json({
+            isSuccess: false,
+            message: constant.logInInvalid
+        })
+    }
+};
+
 module.exports = {
     logIn,
     signUp,
     updateProfile,
     redirectGoogleID,
-    logInWithGoogle
+    logInWithGoogle,
+    redirectFacebookID,
+    logInWithFacebook
 };

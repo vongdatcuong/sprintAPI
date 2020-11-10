@@ -2,7 +2,7 @@ const defaultColNum = 3;
 const SALT_ROUNDS = 7;
 
 const clientDomain = 'http://localhost:3000';
-const redirectGooglePath = '/redirectGoogle';
+const redirectPath = '/redirect';
 const tokenCheckIn = '&token=';
 
 // Messages
@@ -24,7 +24,7 @@ module.exports = {
     defaultColNum,
     SALT_ROUNDS,
     clientDomain,
-    redirectGooglePath,
+    redirectPath,
     tokenCheckIn,
     // Messages
     logInInvalid,
