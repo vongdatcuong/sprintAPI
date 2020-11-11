@@ -3,13 +3,14 @@ const passport = require("passport");
 const FacebookStrategy = require('passport-facebook').Strategy;
 const User = mongoose.model('User');
 const UserModel = require('./userModel');
+const constant = require('../../Utils/constant');
 
 passport.use(
   new FacebookStrategy(
     {
       clientID: process.env.FACEBOOK_OAUTH_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_OAUTH_CLIENT_SECRET,
-      callbackURL: "/user/auth/facebook/redirect",
+      callbackURL: constant.serverDomain + "/user/auth/facebook/redirect",
       profileFields: ['id', 'emails', 'displayName']
     }, (accessToken, refreshToken, profile, done) => {
         // passport callback function

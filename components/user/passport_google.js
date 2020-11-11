@@ -3,13 +3,14 @@ const passport = require("passport");
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const User = mongoose.model('User');
 const UserModel = require('./userModel');
+const constant = require('../../Utils/constant');
 
 passport.use(
   new GoogleStrategy(
     {
       clientID: process.env.GOOGLE_OAUTH2_CLIENT_ID,
       clientSecret: process.env.GOOGLE_OAUTH2_CLIENT_SECRET,
-      callbackURL: "/user/auth/google/redirect"
+      callbackURL: constant.serverDomain + "/user/auth/google/redirect"
     }, (accessToken, refreshToken, profile, done) => {
         // passport callback function
         //check if user already exists in our db with the given profile ID

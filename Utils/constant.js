@@ -2,6 +2,7 @@ const defaultColNum = 3;
 const SALT_ROUNDS = 7;
 
 const clientDomain = 'http://localhost:3000';
+const serverDomain = 'https://shrouded-bastion-84248.herokuapp.com/';
 const redirectPath = '/redirect';
 const tokenCheckIn = '&token=';
 
@@ -23,6 +24,7 @@ const updateCardFail = "Update Card fail !!!";
 module.exports = {
     defaultColNum,
     SALT_ROUNDS,
+    serverDomain,
     clientDomain,
     redirectPath,
     tokenCheckIn,
