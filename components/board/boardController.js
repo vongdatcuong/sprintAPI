@@ -58,6 +58,7 @@ const board = async (req, res, next) => {
                 const newCol = {
                     columnID: col.columnID,
                     columnName: col.columnType.name,
+                    columnTypeID: col.columnTypeID,
                     numOfCard: col.numOfCard,
                     createdDate: col.createdDate
                 }
@@ -193,11 +194,66 @@ const deleteBoard = async (req, res, next) => {
     }
 };
 
+/* POST Swap column of Board. */
+const swapColumn = async (req, res, next) => {
+    const userIDStr = req.body.userID || req.user.userID;
+    try {
+        if (!userIDStr || !req.body.boardID || !req.body.colID1 || !req.body.colID2) {
+            res.json({
+                isSuccess: false,
+                message: constant.updateBoardNameFail
+            })
+        } else {
+            const columns = await Column.getAllColumns({
+                boardID: parseInt(req.body.boardID),
+                columnID: {$in: [parseInt(req.body.colID1), parseInt(req.body.colID2)]}
+            });
+            if (columns && columns.length == 2){
+                const temp = columns[0].order;
+                const updateCol1 = await Column.updateColumn(columns[0].columnID, {
+                    order: columns[1].order
+                });
+                if (updateCol1){
+                    const updateCol2 = await Column.updateColumn(columns[1].columnID, {
+                        order: temp
+                    });
+                    if (updateCol2){
+                        res.json({
+                            isSuccess: true,
+                         })
+                    } else {
+                        res.json({
+                            isSuccess: false,
+                            message: constant.swapColumnFail
+                        })
+                    }
+                } else {
+                    res.json({
+                        isSuccess: false,
+                        message: constant.swapColumnFail
+                    })
+                }
+            } else {
+                res.json({
+                    isSuccess: false,
+                    message: constant.swapColumnFail
+                })
+            }
+        }
+    } catch (error) {
+        res.json({
+            isSuccess: false,
+            message: constant.swapColumnFail
+        })
+    }
+};
+
 module.exports = {
     boards,
     myBoard,
     board,
     addBoard,
     updateName,
-    deleteBoard
+    deleteBoard,
+    swapColumn
 };

@@ -28,6 +28,7 @@ module.exports = {
         return Board.findOne(query)
             .populate({
                 path: 'columns',
+                options: {sort: {order: 1}},
                 populate: [{ path: 'cards', match: {isActive: true}, options: {sort: {createdDate: 1} }}, { path: 'columnType' }]
             })
             .exec();

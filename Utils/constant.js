@@ -2,7 +2,7 @@ const defaultColNum = 3;
 const SALT_ROUNDS = 7;
 
 const clientDomain = 'http://localhost:3000';
-const serverDomain = 'https://shrouded-bastion-84248.herokuapp.com';
+const serverDomain = 'http://localhost:8080';
 const redirectPath = '/redirect';
 const tokenCheckIn = '&token=';
 
@@ -20,6 +20,7 @@ const updateBoardNameFail = "Update Board name fail !!!";
 const deleteCardFail = "Delete Card fail !!!";
 const addCardFail = "Delete Card fail !!!";
 const updateCardFail = "Update Card fail !!!";
+const swapColumnFail = "Swap column fail !!!";
 
 module.exports = {
     defaultColNum,
@@ -41,5 +42,6 @@ module.exports = {
     updateBoardNameFail,
     deleteCardFail,
     addCardFail,
-    updateCardFail
+    updateCardFail,
+    swapColumnFail
 }

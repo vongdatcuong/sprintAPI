@@ -58,6 +58,7 @@ const columnSchema = new mongoose.Schema({
     boardID: { type: SchemaTypes.Long, min: 0, default: 0 },
     columnTypeID: { type: SchemaTypes.Long, min: 0, default: 0 },
     numOfCard: { type: Number, min: 0, default: 0 },
+    order: Number,
     createdDate: Date,
     isActive: Boolean
 }, { collection: "Columns" }, { toJSON: { virtuals: true }, toObject: { virtuals: true } });

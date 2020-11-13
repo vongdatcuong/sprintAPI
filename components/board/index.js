@@ -21,4 +21,7 @@ router.post('/updateName', passport.authenticate('jwt', { session: false }), Boa
 /* POST Delete board */
 router.post('/delete', passport.authenticate('jwt', { session: false }), BoardController.deleteBoard);
 
+/* POST Swap column of board */
+router.post('/swapColumn', passport.authenticate('jwt', { session: false }), BoardController.swapColumn);
+
 module.exports = router;
